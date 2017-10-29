@@ -14,7 +14,7 @@ from cellular_automata import CellularAutomata
 
 ### automate cellular settings
 
-ac_settings = {"ncell_width": 10, "ncell_height": 10, "cell_size": 150}
+ac_settings = {"ncell_width": 20, "ncell_height": 20, "cell_size": 150}
 
 ### run
 

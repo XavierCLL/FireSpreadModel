@@ -30,15 +30,15 @@ class Board:
 
     def draw(self):
 
-        pixel_height = self.ncell_height*self.cell_size
-        pixel_width = self.ncell_width*self.cell_size
-        image = Image.new("RGBA", (pixel_height, pixel_width), (255, 255, 255, 255))
+        board_height = self.ncell_height*self.cell_size
+        board_width = self.ncell_width*self.cell_size
+        image = Image.new("RGBA", (board_height, board_width), (255, 255, 255, 0))
         draw_square = ImageDraw.Draw(image).rectangle
 
         for idx_height in range(self.ncell_height):
             for idx_width in range(self.ncell_width):
                 cell = self.cells[(idx_height, idx_width)]
                 pos_h, pos_w = cell.get_position()
-                draw_square([pos_h, pos_w, pos_h+cell.size, pos_w+cell.size], fill=(idx_height*10, idx_width*10, 55, 255))
+                draw_square([pos_h, pos_w, pos_h+cell.size, pos_w+cell.size], fill=cell.get_color())
 
         image.save("chessboard-pil.png")

@@ -27,5 +27,8 @@ class Cell:
 
         return pos_h, pos_w
 
+    def get_color(self):
+        return self.idx_pos[0]*10, self.idx_pos[1]*10, 55, 255
+
     def next_state(self):
         pass
