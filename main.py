@@ -12,12 +12,12 @@
 
 from cellular_automaton import CellularAutomaton
 
-### automate cellular settings
+### cellular automaton settings
 
-ac_settings = {"ncell_width": 20, "ncell_height": 20, "cell_size": 150}
+ca_settings = {"ncell_width": 20, "ncell_height": 20, "cell_size": 150}
 
 ### run
 
-ac_spread_fires = CellularAutomaton(ac_settings)
+ca_spread_fires = CellularAutomaton(ca_settings)
 
-ac_spread_fires.run()
+ca_spread_fires.run()

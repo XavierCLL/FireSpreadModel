@@ -15,11 +15,11 @@ from board import Board
 
 class CellularAutomaton:
 
-    def __init__(self, ac_settings):
+    def __init__(self, ca_settings):
         print("\nSTARTING THE CELLULAR AUTOMATE\n")
         # init board properties
-        self.board = Board(ac_settings["ncell_width"], ac_settings["ncell_height"],
-                           ac_settings["cell_size"])
+        self.board = Board(ca_settings["ncell_width"], ca_settings["ncell_height"],
+                           ca_settings["cell_size"])
         # global time for CA
         self.time = 1
 
