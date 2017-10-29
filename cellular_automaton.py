@@ -16,13 +16,27 @@ from board import Board
 class CellularAutomaton:
 
     def __init__(self, ac_settings):
-        # init board
+        print("\nSTARTING THE CELLULAR AUTOMATE\n")
+        # init board properties
         self.board = Board(ac_settings["ncell_width"], ac_settings["ncell_height"],
                            ac_settings["cell_size"])
-
+        # global time for CA
         self.time = 1
 
     def run(self):
-        print("\nSTARTING THE CELLULAR AUTOMATE\n")
 
-        self.board.draw()
+        while not self.stop_condition():
+            print("time step: {}".format(self.time))
+
+            self.board.draw(self.time)
+            self.next_time_step()
+
+    def next_time_step(self):
+
+
+        self.time += 1
+
+    def stop_condition(self):
+        if self.time >= 3:
+            return True
+        return False

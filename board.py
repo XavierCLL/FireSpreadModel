@@ -20,7 +20,6 @@ class Board:
         self.ncell_width = ncell_width  # number of cell in the width, width pixels = width*cell_size
         self.ncell_height = ncell_height  # number of cell in the height, height pixels = height*cell_size
         self.cell_size = cell_size
-        self.time = 1
         self.cells = {}
 
         # create board from top-left to bottom-right and left to right
@@ -28,7 +27,7 @@ class Board:
             for idx_width in range(self.ncell_width):
                 self.cells[(idx_height, idx_width)] = Cell(self.cell_size, (idx_height, idx_width))
 
-    def draw(self):
+    def draw(self, time):
 
         board_height = self.ncell_height*self.cell_size
         board_width = self.ncell_width*self.cell_size
@@ -41,4 +40,4 @@ class Board:
                 pos_h, pos_w = cell.get_position()
                 draw_square([pos_h, pos_w, pos_h+cell.size, pos_w+cell.size], fill=cell.get_color())
 
-        image.save("chessboard-pil.png")
+        image.save("ca_board_t{}.png".format(time))
