@@ -44,14 +44,10 @@ class CellularAutomaton:
             #   | (1,-1) | (1,0) | (1,1) |
             #
             nb_cells = {}
-            nb_cells[(-1, -1)] = self.board.get_cell(cell.idx_pos[0]-1, cell.idx_pos[1]-1)
-            nb_cells[(-1,  0)] = self.board.get_cell(cell.idx_pos[0]-1, cell.idx_pos[1])
-            nb_cells[(-1,  1)] = self.board.get_cell(cell.idx_pos[0]-1, cell.idx_pos[1]+1)
-            nb_cells[( 0, -1)] = self.board.get_cell(cell.idx_pos[0],   cell.idx_pos[1]-1)
-            nb_cells[( 0,  1)] = self.board.get_cell(cell.idx_pos[0],   cell.idx_pos[1]+1)
-            nb_cells[( 1, -1)] = self.board.get_cell(cell.idx_pos[0]+1, cell.idx_pos[1]-1)
-            nb_cells[( 1,  0)] = self.board.get_cell(cell.idx_pos[0]+1, cell.idx_pos[1])
-            nb_cells[( 1,  1)] = self.board.get_cell(cell.idx_pos[0]+1, cell.idx_pos[1]+1)
+            for h in [-1, 0, 1]:
+                for w in [-1, 0, 1]:
+                    if h == 0 and w == 0: continue
+                    nb_cells[(h, w)] = self.board.get_cell(cell.idx_pos[0]+h, cell.idx_pos[1]+w)
 
 
         self.time += 1

@@ -31,6 +31,7 @@ class Board:
         try:
             return self.cells[(idx_height, idx_width)]
         except IndexError:
+            # this is for the borders cells without neighbors
             return None
 
     def draw(self, time):
