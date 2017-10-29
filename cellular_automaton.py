@@ -20,6 +20,8 @@ class CellularAutomaton:
         self.board = Board(ac_settings["ncell_width"], ac_settings["ncell_height"],
                            ac_settings["cell_size"])
 
+        self.time = 1
+
     def run(self):
         print("\nSTARTING THE CELLULAR AUTOMATE\n")
 

@@ -15,6 +15,7 @@ class VegetationCover:
 
     def __init__(self):
         self.type = None
+        # index time (normal external condition) that this vegetation
+        # cover necessary to burn completely
         self.burning_idx_time = None
-        self.is_burned = False
-        self.time = 1
+
