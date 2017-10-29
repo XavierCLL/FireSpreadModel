@@ -10,7 +10,7 @@
 #  (at your option) any later version.
 #
 
-from cellular_automata import CellularAutomata
+from cellular_automaton import CellularAutomaton
 
 ### automate cellular settings
 
@@ -18,6 +18,6 @@ ac_settings = {"ncell_width": 20, "ncell_height": 20, "cell_size": 150}
 
 ### run
 
-ac_spread_fires = CellularAutomata(ac_settings)
+ac_spread_fires = CellularAutomaton(ac_settings)
 
 ac_spread_fires.run()

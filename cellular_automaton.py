@@ -13,7 +13,7 @@
 from board import Board
 
 
-class CellularAutomata:
+class CellularAutomaton:
 
     def __init__(self, ac_settings):
         # init board
