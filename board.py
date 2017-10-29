@@ -11,8 +11,13 @@
 #
 
 
-class CellularAutomata:
+class Board:
 
-    def __init__(self):
-        # init board
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.cell_size = None
+        self.time = 1
+
+    def draw(self):
         pass

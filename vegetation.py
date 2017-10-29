@@ -11,8 +11,10 @@
 #
 
 
-class CellularAutomata:
+class VegetationCover:
 
     def __init__(self):
-        # init board
-        pass
+        self.type = None
+        self.burning_idx_time = None
+        self.is_burned = False
+        self.time = 1

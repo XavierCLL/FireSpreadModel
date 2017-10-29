@@ -10,9 +10,14 @@
 #  (at your option) any later version.
 #
 
+from vegetation import VegetationCover
 
-class CellularAutomata:
+
+class Cell:
 
     def __init__(self):
-        # init board
+        self.state = None
+        self.vegetation_cover = VegetationCover()
+
+    def next_state(self):
         pass
