@@ -10,9 +10,17 @@
 #  (at your option) any later version.
 #
 
+from board import Board
+
 
 class CellularAutomata:
 
-    def __init__(self):
+    def __init__(self, ac_settings):
         # init board
-        pass
+        self.board = Board(ac_settings["ncell_width"], ac_settings["ncell_height"],
+                           ac_settings["cell_size"])
+
+    def run(self):
+        print("\nSTARTING THE CELLULAR AUTOMATE\n")
+
+        self.board.draw()

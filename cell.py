@@ -15,9 +15,17 @@ from vegetation import VegetationCover
 
 class Cell:
 
-    def __init__(self):
+    def __init__(self, size, idx_pos):
         self.state = None
         self.vegetation_cover = VegetationCover()
+        self.size = size  # pixel size
+        self.idx_pos = idx_pos  # (height, width)
+
+    def get_position(self):
+        pos_h = self.idx_pos[0] * self.size  # position in height
+        pos_w = self.idx_pos[1] * self.size  # position in width
+
+        return pos_h, pos_w
 
     def next_state(self):
         pass

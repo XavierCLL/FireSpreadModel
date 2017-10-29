@@ -9,15 +9,36 @@
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
 #
+from PIL import Image, ImageDraw
+
+from cell import Cell
 
 
 class Board:
 
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-        self.cell_size = None
+    def __init__(self, ncell_width, ncell_height, cell_size):
+        self.ncell_width = ncell_width  # number of cell in the width, width pixels = width*cell_size
+        self.ncell_height = ncell_height  # number of cell in the height, height pixels = height*cell_size
+        self.cell_size = cell_size
         self.time = 1
+        self.cells = {}
+
+        # create board from top-left to bottom-right and left to right
+        for idx_height in range(self.ncell_height):
+            for idx_width in range(self.ncell_width):
+                self.cells[(idx_height, idx_width)] = Cell(self.cell_size, (idx_height, idx_width))
 
     def draw(self):
-        pass
+
+        pixel_height = self.ncell_height*self.cell_size
+        pixel_width = self.ncell_width*self.cell_size
+        image = Image.new("RGBA", (pixel_height, pixel_width), (255, 255, 255, 255))
+        draw_square = ImageDraw.Draw(image).rectangle
+
+        for idx_height in range(self.ncell_height):
+            for idx_width in range(self.ncell_width):
+                cell = self.cells[(idx_height, idx_width)]
+                pos_h, pos_w = cell.get_position()
+                draw_square([pos_h, pos_w, pos_h+cell.size, pos_w+cell.size], fill=(idx_height*10, idx_width*10, 55, 255))
+
+        image.save("chessboard-pil.png")
