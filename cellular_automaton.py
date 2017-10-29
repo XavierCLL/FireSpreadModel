@@ -32,6 +32,26 @@ class CellularAutomaton:
             self.next_time_step()
 
     def next_time_step(self):
+        """
+        Go to the next time step, applying the transition function
+        to all cells in the board
+        """
+        for cell in self.board.cells:
+            # get all neighbor cells for this cell
+            #
+            #   | (-1,-1)| (-1,0)| (-1,1)|
+            #   | (0,-1) | (0,0) | (0,1) |
+            #   | (1,-1) | (1,0) | (1,1) |
+            #
+            nb_cells = {}
+            nb_cells[(-1, -1)] = self.board.get_cell(cell.idx_pos[0]-1, cell.idx_pos[1]-1)
+            nb_cells[(-1,  0)] = self.board.get_cell(cell.idx_pos[0]-1, cell.idx_pos[1])
+            nb_cells[(-1,  1)] = self.board.get_cell(cell.idx_pos[0]-1, cell.idx_pos[1]+1)
+            nb_cells[( 0, -1)] = self.board.get_cell(cell.idx_pos[0],   cell.idx_pos[1]-1)
+            nb_cells[( 0,  1)] = self.board.get_cell(cell.idx_pos[0],   cell.idx_pos[1]+1)
+            nb_cells[( 1, -1)] = self.board.get_cell(cell.idx_pos[0]+1, cell.idx_pos[1]-1)
+            nb_cells[( 1,  0)] = self.board.get_cell(cell.idx_pos[0]+1, cell.idx_pos[1])
+            nb_cells[( 1,  1)] = self.board.get_cell(cell.idx_pos[0]+1, cell.idx_pos[1]+1)
 
 
         self.time += 1

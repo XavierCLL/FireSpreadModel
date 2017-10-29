@@ -19,13 +19,19 @@ class Board:
     def __init__(self, ncell_width, ncell_height, cell_size):
         self.ncell_width = ncell_width  # number of cell in the width, width pixels = width*cell_size
         self.ncell_height = ncell_height  # number of cell in the height, height pixels = height*cell_size
-        self.cell_size = cell_size
-        self.cells = {}
+        self.cell_size = cell_size  # cell size in pixels
+        self.cells = {}  # dict[(idx_height, idx_width)] = cell instance
 
         # create board from top-left to bottom-right and left to right
         for idx_height in range(self.ncell_height):
             for idx_width in range(self.ncell_width):
                 self.cells[(idx_height, idx_width)] = Cell(self.cell_size, (idx_height, idx_width))
+
+    def get_cell(self, idx_height, idx_width):
+        try:
+            return self.cells[(idx_height, idx_width)]
+        except IndexError:
+            return None
 
     def draw(self, time):
 

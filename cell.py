@@ -31,7 +31,6 @@ class Cell:
         self.wind_s = None  # wind speed
         self.wind_d = None  # wind direction
 
-
     def get_position(self):
         """
         Get pixel position inside board (based on index board position)
