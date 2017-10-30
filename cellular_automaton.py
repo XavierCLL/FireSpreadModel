@@ -49,6 +49,8 @@ class CellularAutomaton:
                     if h == 0 and w == 0: continue
                     nb_cells[(h, w)] = self.board.get_cell(cell.idx_pos[0]+h, cell.idx_pos[1]+w)
 
+            # go to the next stage
+            cell.next_state(nb_cells)
 
         self.time += 1
 

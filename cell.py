@@ -57,5 +57,5 @@ class Cell:
         """
         pass
 
-    def next_state(self):
+    def next_state(self, nb_cells):
         pass
