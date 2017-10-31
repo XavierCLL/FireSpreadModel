@@ -60,7 +60,8 @@ class Cell:
         pass
 
     def next_state(self, nb_cells):
-        new_state = {}
+        #new_state = {}
+        new_state = self.state
 
 
         self.new_state = new_state

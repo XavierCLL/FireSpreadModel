@@ -14,7 +14,7 @@ from cellular_automaton import CellularAutomaton
 
 ### cellular automaton settings
 
-ca_settings = {"ncell_width": 20, "ncell_height": 20, "cell_size": 150}
+ca_settings = {"ncell_width": 20, "ncell_height": 20, "cell_size": 100}
 
 ### run
 

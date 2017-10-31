@@ -46,6 +46,7 @@ class Board:
             for idx_width in range(self.ncell_width):
                 cell = self.cells[(idx_height, idx_width)]
                 pos_h, pos_w = cell.get_position()
-                draw_square([pos_h, pos_w, pos_h+cell.size, pos_w+cell.size], fill=cell.get_color())
+                draw_square([pos_h, pos_w, pos_h+cell.size, pos_w+cell.size],
+                            fill=cell.get_color(), outline=(255, 255, 255, 255))
 
         image.save("ca_board_t{}.png".format(time))
