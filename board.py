@@ -9,6 +9,7 @@
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
 #
+from collections import OrderedDict
 from PIL import Image, ImageDraw
 
 from cell import Cell
@@ -20,7 +21,7 @@ class Board:
         self.ncell_width = ncell_width  # number of cell in the width, width pixels = width*cell_size
         self.ncell_height = ncell_height  # number of cell in the height, height pixels = height*cell_size
         self.cell_size = cell_size  # cell size in pixels
-        self.cells = {}  # dict[(idx_height, idx_width)] = cell instance
+        self.cells = OrderedDict()  # dict[(idx_height, idx_width)] = cell instance
 
         # create board from top-left to bottom-right and left to right
         for idx_height in range(self.ncell_height):
