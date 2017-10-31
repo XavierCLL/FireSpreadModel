@@ -36,7 +36,7 @@ class CellularAutomaton:
         Go to the next time step, applying the transition function
         to all cells in the board
         """
-        for (idx_h, idx_w), cell in self.board.cells.items():
+        for cell in self.board.cells.values():
             # get all neighbor cells for this cell
             #
             #   | (-1,-1)| (-1,0)| (-1,1)|

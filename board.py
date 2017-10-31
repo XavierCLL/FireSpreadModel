@@ -26,7 +26,7 @@ class Board:
         # create board from top-left to bottom-right and left to right
         for idx_height in range(self.ncell_height):
             for idx_width in range(self.ncell_width):
-                self.cells[(idx_height, idx_width)] = Cell(self.cell_size, (idx_height, idx_width))
+                self.cells[(idx_height, idx_width)] = Cell(self.cell_size, idx_height, idx_width)
 
     def get_cell(self, idx_height, idx_width):
         try:
