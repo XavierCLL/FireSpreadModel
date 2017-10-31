@@ -31,7 +31,7 @@ class Board:
     def get_cell(self, idx_height, idx_width):
         try:
             return self.cells[(idx_height, idx_width)]
-        except IndexError:
+        except (IndexError, KeyError):
             # this is for the borders cells without neighbors
             return None
 
