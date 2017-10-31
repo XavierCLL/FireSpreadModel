@@ -47,7 +47,7 @@ class CellularAutomaton:
             for h in [-1, 0, 1]:
                 for w in [-1, 0, 1]:
                     if h == 0 and w == 0: continue
-                    nb_cells[(h, w)] = self.board.get_cell(cell.idx_pos[0]+h, cell.idx_pos[1]+w)
+                    nb_cells[(h, w)] = self.board.get_cell(cell.idx_h + h, cell.idx_w + w)
 
             # go to the next stage
             cell.next_state(nb_cells)
