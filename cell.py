@@ -19,10 +19,11 @@ class Cell:
         # cell status
         # 0=burned, 1=unburned, 2=burning
         self.state = {"burned": False, "unburned": True, "burning": False}
+        self.new_state = None  # used for storage the new state, change to state in the end
 
         # cell properties
         self.size = size  # pixel size
-        self.idx_pos = idx_pos  # index board position (height, width)
+        self.idx_pos = idx_pos  # index board position (idx_height, idx_width)
         self.vegetation_cover = VegetationCover()
 
         # external conditions
@@ -58,4 +59,7 @@ class Cell:
         pass
 
     def next_state(self, nb_cells):
-        pass
+        new_state = {}
+
+
+        self.new_state = new_state

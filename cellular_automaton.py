@@ -36,7 +36,7 @@ class CellularAutomaton:
         Go to the next time step, applying the transition function
         to all cells in the board
         """
-        for cell in self.board.cells:
+        for (idx_h, idx_w), cell in self.board.cells.items():
             # get all neighbor cells for this cell
             #
             #   | (-1,-1)| (-1,0)| (-1,1)|
@@ -52,6 +52,12 @@ class CellularAutomaton:
             # go to the next stage
             cell.next_state(nb_cells)
 
+        # now set the new state to real state of cells, this is
+        # for no change state of cell while are applying the
+        # transition functions
+        for cell in self.board.cells.values():
+            cell.state = cell.new_state
+        # next time
         self.time += 1
 
     def stop_condition(self):
