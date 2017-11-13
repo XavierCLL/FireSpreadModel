@@ -25,7 +25,7 @@ class Board:
         # define board pixels settings
         self.ncell_width = round((x_max - x_min) / cell_size_dd)  # number of cell in the width, width pixels = width*cell_size
         self.ncell_height = round((y_max - y_min) / cell_size_dd)  # number of cell in the height, height pixels = height*cell_size
-        print("Init board: {}x{}".format(self.ncell_width, self.ncell_height))
+        print("Init board: {}x{} cells\n".format(self.ncell_width, self.ncell_height))
 
         # define matrix with lon, lat center location for all pixels
         self.map_locations = OrderedDict()
@@ -55,14 +55,14 @@ class Board:
 
         board_height = self.ncell_height*self.cell_size_p
         board_width = self.ncell_width*self.cell_size_p
-        image = Image.new("RGBA", (board_height, board_width), (255, 255, 255, 0))
+        image = Image.new("RGBA", (board_width, board_height), (255, 255, 255, 0))
         draw_square = ImageDraw.Draw(image).rectangle
 
         for idx_height in range(self.ncell_height):
             for idx_width in range(self.ncell_width):
                 cell = self.cells[(idx_height, idx_width)]
-                pos_h, pos_w = cell.get_position()
-                draw_square([pos_h, pos_w, pos_h+cell.size, pos_w+cell.size],
+                pos_w, pos_h = cell.get_position()
+                draw_square([pos_w, pos_h, pos_w+cell.size, pos_h+cell.size],
                             fill=cell.get_color(), outline=(255, 255, 255, 255))
 
         image.save("ca_board_t{}.png".format(time))

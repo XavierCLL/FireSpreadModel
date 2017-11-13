@@ -39,10 +39,10 @@ class Cell:
         """
         Get pixel position inside board (based on index board position)
         """
-        pos_h = self.idx_h * self.size  # position in height
         pos_w = self.idx_w * self.size  # position in width
+        pos_h = self.idx_h * self.size  # position in height
 
-        return pos_h, pos_w
+        return pos_w, pos_h
 
     def get_color(self):
         """
