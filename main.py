@@ -12,9 +12,32 @@
 
 from cellular_automaton import CellularAutomaton
 
+### board settings
+#            6.55
+#         ___________
+#        |           |
+# -70.9  |           | -70.595
+#        |___________|
+#
+#            6.355
+
+# lat and lon:
+x_min = -70.9
+x_max = -70.595
+y_min = 6.355
+y_max = 6.55
+
+extent = (x_min, x_max, y_min, y_max)
+cell_size_dd = 0.001  # cell size in decimal degrees
+
+# for draw
+cell_size_p = 10  # cell size in pixels
+
+
 ### cellular automaton settings
 
-ca_settings = {"ncell_width": 20, "ncell_height": 20, "cell_size": 100}
+ca_settings = {"extent": extent, "cell_size_dd": cell_size_dd, "cell_size_p": cell_size_p}
+
 
 ### run
 

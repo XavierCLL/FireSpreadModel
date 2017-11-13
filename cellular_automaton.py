@@ -18,8 +18,7 @@ class CellularAutomaton:
     def __init__(self, ca_settings):
         print("\nSTARTING THE CELLULAR AUTOMATE\n")
         # init board properties
-        self.board = Board(ca_settings["ncell_width"], ca_settings["ncell_height"],
-                           ca_settings["cell_size"])
+        self.board = Board(ca_settings["extent"], ca_settings["cell_size_dd"], ca_settings["cell_size_p"])
         # global time for CA
         self.time = 1
 

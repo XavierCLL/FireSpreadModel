@@ -15,7 +15,7 @@ from vegetation import VegetationCover
 
 class Cell:
 
-    def __init__(self, size, idx_h, idx_w):
+    def __init__(self, size, idx_h, idx_w, lon, lat):
         # cell status
         # 0=burned, 1=unburned, 2=burning
         self.state = {"burned": False, "unburned": True, "burning": False}
@@ -23,8 +23,10 @@ class Cell:
 
         # cell properties
         self.size = size  # pixel size
-        self.idx_h = idx_h  # index board position in height
-        self.idx_w = idx_w  # index board position in width
+        self.idx_h = idx_h  # index board position in height (x)
+        self.idx_w = idx_w  # index board position in width (y)
+        self.lon = lon  # longitude position (x)
+        self.lat = lat  # latitude position (y)
         self.vegetation_cover = VegetationCover()
 
         # external conditions
