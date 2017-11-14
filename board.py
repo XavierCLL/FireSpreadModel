@@ -30,9 +30,9 @@ class Board:
         # define matrix with lon, lat center location for all pixels
         self.map_locations = OrderedDict()
         for idx_height, lat in enumerate(np.arange(round(y_min+cell_size_dd/2, 8),
-                                                   round(y_max+cell_size_dd/2, 8), cell_size_dd)[:-1]):
+                                                   round(y_max+cell_size_dd/2, 8), cell_size_dd)):
             for idx_width, lon in enumerate(np.arange(round(x_min+cell_size_dd/2, 8),
-                                                      round(x_max+cell_size_dd/2, 8), cell_size_dd)[:-1]):
+                                                      round(x_max+cell_size_dd/2, 8), cell_size_dd)):
                 self.map_locations[(idx_height, idx_width)] = (lon, lat)
 
         self.cell_size_p = cell_size_p  # cell size in pixels
@@ -65,4 +65,5 @@ class Board:
                 draw_square([pos_w, pos_h, pos_w+cell.size, pos_h+cell.size],
                             fill=cell.get_color(), outline=(255, 255, 255, 255))
 
+        image = image.transpose(Image.FLIP_TOP_BOTTOM)
         image.save("ca_board_t{}.png".format(time))

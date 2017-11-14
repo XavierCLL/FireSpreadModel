@@ -17,8 +17,8 @@ class Cell:
 
     def __init__(self, size, idx_h, idx_w, lon, lat):
         # cell status
-        # 0=burned, 1=unburned, 2=burning
-        self.state = {"burned": False, "unburned": True, "burning": False}
+        # 0=burned, 1=unburned, 2=on_fire
+        self.state = {"burned": False, "unburned": True, "on_fire": False}
         self.new_state = None  # used for storage the new state, change to state in the end
 
         # cell properties
@@ -27,13 +27,11 @@ class Cell:
         self.idx_w = idx_w  # index board position in width (y)
         self.lon = lon  # longitude position (x)
         self.lat = lat  # latitude position (y)
-        self.vegetation_cover = VegetationCover()
+        self.vegetation_cover = VegetationCover(lon, lat)
 
         # external conditions
         self.evi = None  # index EVI
         self.ndwppt = None  # number of days without precipitation
-        self.wind_s = None  # wind speed
-        self.wind_d = None  # wind direction
 
     def get_position(self):
         """
@@ -50,8 +48,10 @@ class Cell:
         """
         if self.state["burned"]:
             return 0, 0, 0, 255
+        elif self.state["on_fire"]:
+            return 255, 0, 0, 255
         else:
-            return self.idx_h*10, self.idx_w*10, 55, 255
+            return self.vegetation_cover.color
 
     def get_burning_time(self):
         """

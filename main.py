@@ -28,7 +28,7 @@ y_min = 6.355
 y_max = 6.55
 
 extent = (x_min, x_max, y_min, y_max)
-cell_size_dd = 0.001  # cell size in decimal degrees
+cell_size_dd = 0.005  # cell size in decimal degrees, default: 0.001
 
 # for draw
 cell_size_p = 10  # cell size in pixels
