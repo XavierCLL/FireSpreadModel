@@ -64,8 +64,21 @@ class Cell:
         pass
 
     def next_state(self, nb_cells):
-        #new_state = {}
+        # init new state no change
         new_state = self.state
 
+        if self.state == "unburned":
+            if "on_fire" in [nb_cell.state for nb_cell in nb_cells.values() if nb_cell is not None]:
+                new_state = "on_fire"
+
+        if self.state == "on_fire":
+            new_state = "burned"
+
+        if self.state == "burned":
+            new_state = self.state
 
         self.new_state = new_state
+
+
+
+
