@@ -40,7 +40,7 @@ class CellularAutomaton:
 
         while not self.stop_condition():
             print("time step: {}".format(self.time))
-
+            self.update_variables()
             self.board.draw(self.time)
             self.next_time_step()
 
@@ -72,6 +72,14 @@ class CellularAutomaton:
             cell.state = cell.new_state
         # next time
         self.time += 1
+
+    def update_variables(self):
+        print("  updating variables...")
+        current_date_time = self.date + timedelta(hours=self.time-1)
+        for cell in self.board.cells.values():
+            print(cell.idx_h, cell.idx_w)
+            cell.evi = get_evi(current_date_time, cell.lon, cell.lat)
+            cell.ncdwppt = get_ncdwppt(current_date_time, cell.lon, cell.lat)
 
     def stop_condition(self):
         if self.time >= 3:

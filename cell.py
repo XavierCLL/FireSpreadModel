@@ -31,7 +31,7 @@ class Cell:
 
         # external conditions
         self.evi = None  # index EVI
-        self.ndwppt = None  # number of days without precipitation
+        self.ncdwppt = None  # number of continuous days without precipitation
 
     def get_position(self):
         """
@@ -57,7 +57,7 @@ class Cell:
         """
         Time to take this cell burned completely, depends on:
             vegetation cover: [burning_idx_time]
-            external conditions: [evi, ndwppt, wind]
+            external conditions: [evi, ncdwppt, wind]
         """
         pass
 
