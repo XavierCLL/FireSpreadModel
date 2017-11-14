@@ -67,6 +67,9 @@ class VegetationCover:
         # cover necessary to burn completely
         self.burning_idx_time = None
         #
+        self.cod_cob = None
+        self.color = None
+
+    def set_cover(self):
         self.cod_cob = get_cover(self.lon, self.lat)
         self.color, self.type, self.index_cover = table_properties_cover(self.cod_cob)
-

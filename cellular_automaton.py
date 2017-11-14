@@ -10,9 +10,13 @@
 #  (at your option) any later version.
 #
 import sys
+import numpy as np
+import dask.array as da
+from dask import multiprocessing
 from datetime import timedelta
 
 from board import Board
+from cell import Cell
 
 INGESTION_SCRIPTS_DIR = "/multimedia/Thesis_data/geo_data/verification/"
 
@@ -76,10 +80,18 @@ class CellularAutomaton:
     def update_variables(self):
         print("  updating variables...")
         current_date_time = self.date + timedelta(hours=self.time-1)
-        for cell in self.board.cells.values():
-            print(cell.idx_h, cell.idx_w)
-            cell.evi = get_evi(current_date_time, cell.lon, cell.lat)
-            cell.ncdwppt = get_ncdwppt(current_date_time, cell.lon, cell.lat)
+
+        # set for all cells the evi and ncdwppt in parallel process using dask
+        def func(block):
+            for cell in block:
+                cell.evi = get_evi(current_date_time, cell.lon, cell.lat)
+                cell.ncdwppt = get_ncdwppt(current_date_time, cell.lon, cell.lat)
+            return block
+
+        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(100))
+        cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=12, get=multiprocessing.get)
+        for cell in cells:
+            self.board.cells[(cell.idx_h, cell.idx_w)] = cell
 
     def stop_condition(self):
         if self.time >= 3:

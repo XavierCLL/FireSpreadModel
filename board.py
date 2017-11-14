@@ -10,6 +10,8 @@
 #  (at your option) any later version.
 #
 import numpy as np
+import dask.array as da
+from dask import multiprocessing
 from collections import OrderedDict
 from PIL import Image, ImageDraw
 
@@ -38,11 +40,22 @@ class Board:
         self.cell_size_p = cell_size_p  # cell size in pixels
         self.cells = OrderedDict()  # dict[(idx_height, idx_width)] = cell instance
 
+        print("  init cells and vegetation cover...")
         # create board from top-left to bottom-right and left to right
         for idx_height in range(self.ncell_height):
             for idx_width in range(self.ncell_width):
                 self.cells[(idx_height, idx_width)] = Cell(self.cell_size_p, idx_height, idx_width,
                                                            *self.map_locations[(idx_height, idx_width)])
+
+        # set for all cells the cover in parallel process using dask
+        def func(block):
+            for cell in block:
+                cell.vegetation_cover.set_cover()
+            return block
+        stack = da.from_array(np.array(list(self.cells.values())), chunks=(100))
+        cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=12, get=multiprocessing.get)
+        for cell in cells:
+            self.cells[(cell.idx_h, cell.idx_w)] = cell
 
     def get_cell(self, idx_height, idx_width):
         try:
