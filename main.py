@@ -9,6 +9,7 @@
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
 #
+from datetime import date
 
 from cellular_automaton import CellularAutomaton
 
@@ -26,17 +27,22 @@ x_min = -70.9
 x_max = -70.595
 y_min = 6.355
 y_max = 6.55
-
 extent = (x_min, x_max, y_min, y_max)
-cell_size_dd = 0.005  # cell size in decimal degrees, default: 0.001
 
-# for draw
-cell_size_p = 10  # cell size in pixels
+# cell size in decimal degrees, default: 0.001
+cell_size_dd = 0.005
+
+# start date for the fire
+start_date = date(2007, 1, 2)
+
+# cell size in pixels
+cell_size_p = 10
 
 
 ### cellular automaton settings
 
-ca_settings = {"extent": extent, "cell_size_dd": cell_size_dd, "cell_size_p": cell_size_p}
+ca_settings = {"extent": extent, "cell_size_dd": cell_size_dd,
+               "cell_size_p": cell_size_p, "start_date": start_date}
 
 
 ### run

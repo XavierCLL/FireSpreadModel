@@ -9,8 +9,19 @@
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
 #
+import sys
+from datetime import timedelta
 
 from board import Board
+
+INGESTION_SCRIPTS_DIR = "/multimedia/Thesis_data/geo_data/verification/"
+
+# add dir to python path
+if INGESTION_SCRIPTS_DIR not in sys.path:
+    sys.path.append(INGESTION_SCRIPTS_DIR)
+
+from ingestion_evi import get_evi
+from ingestion_ncdwppt import get_ncdwppt
 
 
 class CellularAutomaton:
@@ -19,8 +30,11 @@ class CellularAutomaton:
         print("\nSTARTING THE CELLULAR AUTOMATE\n")
         # init board properties
         self.board = Board(ca_settings["extent"], ca_settings["cell_size_dd"], ca_settings["cell_size_p"])
-        # global time for CA
-        self.time = 1
+
+        # init global date
+        self.date = ca_settings["start_date"]
+        # global step time for CA
+        self.time = 1  # hours
 
     def run(self):
 
