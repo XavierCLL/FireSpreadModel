@@ -9,6 +9,7 @@
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
 #
+import os
 import numpy as np
 import dask.array as da
 from dask import multiprocessing
@@ -90,4 +91,6 @@ class Board:
                             fill=cell.get_color(), outline=(255, 255, 255, 255))
 
         image = image.transpose(Image.FLIP_TOP_BOTTOM)
-        image.save("ca_board_t{}.png".format(time))
+        if not os.path.isdir("simulate"):
+            os.mkdir("simulate")
+        image.save("simulate/ca_board_t{}.png".format(time))
