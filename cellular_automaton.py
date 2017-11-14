@@ -34,6 +34,8 @@ class CellularAutomaton:
         print("\nSTARTING THE CELLULAR AUTOMATE\n")
         # init board properties
         self.board = Board(ca_settings["extent"], ca_settings["cell_size_dd"], ca_settings["cell_size_p"])
+        # check if for the current time any cells has changed, for stop condition
+        self.any_cells_changes = True
         # define the init on fires cells
         for lon, lat in ca_settings["init_cells_onfire"]:
             cell = self.board.cells[self.board.get_map_location(lon, lat)]
@@ -76,7 +78,10 @@ class CellularAutomaton:
         # now set the new state to real state of cells, this is
         # for no change state of cell while are applying the
         # transition functions
+        self.any_cells_changes = False  # for stop condition
         for cell in self.board.cells.values():
+            if cell.state != cell.new_state:
+                self.any_cells_changes = True
             cell.state = cell.new_state
         # next time
         self.time += 1
@@ -98,6 +103,10 @@ class CellularAutomaton:
             self.board.cells[(cell.idx_h, cell.idx_w)] = cell
 
     def stop_condition(self):
-        if self.time >= 3:
+        if self.time > 50:  # maximum iteration
             return True
-        return False
+
+        if not self.any_cells_changes:
+            return True
+        else:
+            return False
