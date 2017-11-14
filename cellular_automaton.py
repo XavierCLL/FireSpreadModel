@@ -34,6 +34,10 @@ class CellularAutomaton:
         print("\nSTARTING THE CELLULAR AUTOMATE\n")
         # init board properties
         self.board = Board(ca_settings["extent"], ca_settings["cell_size_dd"], ca_settings["cell_size_p"])
+        # define the init on fires cells
+        for lon, lat in ca_settings["init_cells_onfire"]:
+            cell = self.board.cells[self.board.get_map_location(lon, lat)]
+            cell.state = "on_fire"
 
         # init global date
         self.date = ca_settings["start_date"]
@@ -44,7 +48,7 @@ class CellularAutomaton:
 
         while not self.stop_condition():
             print("time step: {}".format(self.time))
-            self.update_variables()
+            #self.update_variables()
             self.board.draw(self.time)
             self.next_time_step()
 
@@ -88,8 +92,8 @@ class CellularAutomaton:
                 cell.ncdwppt = get_ncdwppt(current_date_time, cell.lon, cell.lat)
             return block
 
-        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(100))
-        cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=12, get=multiprocessing.get)
+        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(300))
+        cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=8, get=multiprocessing.get)
         for cell in cells:
             self.board.cells[(cell.idx_h, cell.idx_w)] = cell
 

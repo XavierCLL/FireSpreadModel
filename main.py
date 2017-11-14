@@ -35,6 +35,9 @@ cell_size_dd = 0.005
 # start date for the fire
 start_date = date(2007, 1, 2)
 
+# define the cells on fire at start [(lon, lat), ...]
+init_cells_onfire = [(-70.72449, 6.44022)]
+
 # cell size in pixels
 cell_size_p = 10
 
@@ -42,7 +45,8 @@ cell_size_p = 10
 ### cellular automaton settings
 
 ca_settings = {"extent": extent, "cell_size_dd": cell_size_dd,
-               "cell_size_p": cell_size_p, "start_date": start_date}
+               "cell_size_p": cell_size_p, "start_date": start_date,
+               "init_cells_onfire": init_cells_onfire}
 
 
 ### run

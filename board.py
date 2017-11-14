@@ -23,6 +23,7 @@ class Board:
     def __init__(self, extent, cell_size_dd, cell_size_p):
         self.extent = extent
         x_min, x_max, y_min, y_max = extent
+        self.cell_size_dd = cell_size_dd
 
         # define board pixels settings
         self.ncell_width = round((x_max - x_min) / cell_size_dd)  # number of cell in the width, width pixels = width*cell_size
@@ -52,10 +53,20 @@ class Board:
             for cell in block:
                 cell.vegetation_cover.set_cover()
             return block
-        stack = da.from_array(np.array(list(self.cells.values())), chunks=(100))
-        cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=12, get=multiprocessing.get)
+        stack = da.from_array(np.array(list(self.cells.values())), chunks=(300))
+        cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=8, get=multiprocessing.get)
         for cell in cells:
             self.cells[(cell.idx_h, cell.idx_w)] = cell
+
+    def get_map_location(self, from_lon, from_lat):
+        x_min, x_max, y_min, y_max = self.extent
+        for idx_height, lat in enumerate(np.arange(round(y_min+self.cell_size_dd/2, 8),
+                                                   round(y_max+self.cell_size_dd/2, 8), self.cell_size_dd)):
+            for idx_width, lon in enumerate(np.arange(round(x_min+self.cell_size_dd/2, 8),
+                                                      round(x_max+self.cell_size_dd/2, 8), self.cell_size_dd)):
+                if (lat < from_lat < lat + self.cell_size_dd and
+                    lon < from_lon < lon + self.cell_size_dd):
+                    return idx_height, idx_width
 
     def get_cell(self, idx_height, idx_width):
         try:

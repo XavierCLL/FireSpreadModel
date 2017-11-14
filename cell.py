@@ -16,9 +16,11 @@ from vegetation import VegetationCover
 class Cell:
 
     def __init__(self, size, idx_h, idx_w, lon, lat):
-        # cell status
-        # 0=burned, 1=unburned, 2=on_fire
-        self.state = {"burned": False, "unburned": True, "on_fire": False}
+        # cell status:
+        #   "unburned"
+        #   "on_fire"
+        #   "burned"
+        self.state = "unburned"
         self.new_state = None  # used for storage the new state, change to state in the end
 
         # cell properties
@@ -46,9 +48,9 @@ class Cell:
         """
         Return (R, G, B, A) for draw this cell
         """
-        if self.state["burned"]:
+        if self.state == "burned":
             return 0, 0, 0, 255
-        elif self.state["on_fire"]:
+        elif self.state == "on_fire":
             return 255, 0, 0, 255
         else:
             return self.vegetation_cover.color
