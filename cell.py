@@ -69,7 +69,8 @@ class Cell:
 
         if self.state == "unburned":
             if "on_fire" in [nb_cell.state for nb_cell in nb_cells.values() if nb_cell is not None]:
-                new_state = "on_fire"
+                if self.vegetation_cover.burn_index > 0.5:
+                    new_state = "on_fire"
 
         if self.state == "on_fire":
             new_state = "burned"

@@ -41,7 +41,7 @@ class CellularAutomaton:
             cell = self.board.cells[self.board.get_map_location(lon, lat)]
             cell.state = "on_fire"
 
-        # init global date
+        # init global date (don't change over time steps, for get current date => date + time)
         self.date = ca_settings["start_date"]
         # global step time for CA
         self.time = 1  # hours

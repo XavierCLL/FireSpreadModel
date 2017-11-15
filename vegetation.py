@@ -29,33 +29,39 @@ def table_properties_cover(cod_cob):
     if cod_cob.startswith("3.2.1"):
         color = (222, 215, 163, 255)
         type = "Herbazal denso"
-        index_cover = 0.98
-        return color, type, index_cover
+        burning_index = 0.98
+        burning_time = 2  # time steps
+        return color, type, burning_index, burning_time
     if cod_cob.startswith("2.3.1"):
         color = (199, 230, 123, 255)
         type = "Pastos limpios"
-        index_cover = 0.98
-        return color, type, index_cover
+        burning_index = 0.98
+        burning_time = 2  # time steps
+        return color, type, burning_index, burning_time
     if cod_cob.startswith("3.2."):
         color = (191, 222, 144, 255)
         type = "Arbustos o zonas de transicion"
-        index_cover = 0.7
-        return color, type, index_cover
+        burning_index = 0.7
+        burning_time = 4  # time steps
+        return color, type, burning_index, burning_time
     if cod_cob.startswith("3.1"):
         color = (68, 134, 78, 255)
         type = "Bosques de galeria y otros"
-        index_cover = 0.1
-        return color, type, index_cover
+        burning_index = 0.1
+        burning_time = 6  # time steps
+        return color, type, burning_index, burning_time
     if cod_cob.startswith("4.1"):
         color = (112, 197, 198, 255)
         type = "Zonas pantanosas o areas humedas"
-        index_cover = 0.1
-        return color, type, index_cover
+        burning_index = 0.1
+        burning_time = 2  # time steps
+        return color, type, burning_index, burning_time
 
     color = (152, 152, 152, 255)
     type = "Otra cobertura"
-    index_cover = 0.05
-    return color, type, index_cover
+    burning_index = 0.05
+    burning_time = 2  # time steps
+    return color, type, burning_index, burning_time
 
 
 class VegetationCover:
@@ -66,10 +72,10 @@ class VegetationCover:
         # index time (normal external condition) that this vegetation
         # cover necessary to burn completely
         self.burning_idx_time = None
-        #
-        self.cod_cob = None
-        self.color = None
 
-    def set_cover(self):
+    def set_properties(self):
+        # from corin land cover ingestion script
         self.cod_cob = get_cover(self.lon, self.lat)
-        self.color, self.type, self.index_cover = table_properties_cover(self.cod_cob)
+        # set vegetation cover properties
+        self.color, self.type, self.burning_index, self.burning_time = \
+            table_properties_cover(self.cod_cob)

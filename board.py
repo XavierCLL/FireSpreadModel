@@ -52,7 +52,7 @@ class Board:
         # set for all cells the cover in parallel process using dask
         def func(block):
             for cell in block:
-                cell.vegetation_cover.set_cover()
+                cell.vegetation_cover.set_properties()
             return block
         stack = da.from_array(np.array(list(self.cells.values())), chunks=(300))
         cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=8, get=multiprocessing.get)
