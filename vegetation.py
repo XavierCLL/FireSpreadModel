@@ -29,13 +29,13 @@ def table_properties_cover(cod_cob):
     if cod_cob.startswith("3.2.1"):
         color = (222, 215, 163, 255)
         type = "Herbazal denso"
-        burning_index = 0.98
+        burning_index = 0.9
         burning_time = 2  # time steps
         return color, type, burning_index, burning_time
     if cod_cob.startswith("2.3.1"):
         color = (199, 230, 123, 255)
         type = "Pastos limpios"
-        burning_index = 0.98
+        burning_index = 0.9
         burning_time = 2  # time steps
         return color, type, burning_index, burning_time
     if cod_cob.startswith("3.2."):
