@@ -9,6 +9,7 @@
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
 #
+from copy import deepcopy
 
 from vegetation import VegetationCover
 
@@ -21,7 +22,10 @@ class Cell:
         #   "on_fire"
         #   "burned"
         self.state = "unburned"
-        self.new_state = None  # used for storage the new state, change to state in the end
+        # used for storage the new state, change to state in the end of time step
+        self.new_state = None
+        # resistance to burning for this cell depends of: type cover, evi and ncdwppt
+        self.resistance_to_burning = None
 
         # cell properties
         self.size = size  # pixel size
@@ -63,20 +67,49 @@ class Cell:
         """
         pass
 
+    def set_resistance_to_burning(self):
+        evi = deepcopy(self.evi)
+        burning_index = deepcopy(self.vegetation_cover.burning_index)
+        ncdwppt = deepcopy(self.ncdwppt)
+        # lineal variable normalization
+        # y = (x - min)/(max - min)
+        evi = evi / 0.4
+        ncdwppt = ncdwppt / 28.3
+
+        self.resistance_to_burning = evi / (burning_index * ncdwppt)
+
     def next_state(self, nb_cells):
         # init new state no change
-        new_state = self.state
+        new_state = deepcopy(self.state)
 
+        ###########################
         if self.state == "unburned":
-            if "on_fire" in [nb_cell.state for nb_cell in nb_cells.values() if nb_cell is not None]:
-                if self.vegetation_cover.burn_index > 0.5:
-                    new_state = "on_fire"
+            r2b_nb_cells = 0
+            for (h, w), nb_cell in nb_cells.items():
+                if nb_cell is None or nb_cell.state != "on_fire":
+                    continue
+                if abs(h) == 1 and abs(w) == 1:
+                    N = 1 / (2 ** 0.5)  # diagonal neighbor
+                else:
+                    N = 1  # adjacent neighbor
+                d = 1  # spread velocity
+                r2b_nb_cells += d * N
+            self.resistance_to_burning -= r2b_nb_cells
 
+            if self.resistance_to_burning <= 0:
+                new_state = "on_fire"
+
+        ###########################
         if self.state == "on_fire":
-            new_state = "burned"
+            # TODO depends on evi and ncdwppt?
+            if self.vegetation_cover.burning_time <= 1:
+                new_state = "burned"
+            else:
+                self.vegetation_cover.burning_time -= 1
 
+        ###########################
         if self.state == "burned":
-            new_state = self.state
+            pass
 
         self.new_state = new_state
 

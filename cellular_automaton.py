@@ -34,8 +34,6 @@ class CellularAutomaton:
         print("\nSTARTING THE CELLULAR AUTOMATE\n")
         # init board properties
         self.board = Board(ca_settings["extent"], ca_settings["cell_size_dd"], ca_settings["cell_size_p"])
-        # check if for the current time any cells has changed, for stop condition
-        self.any_cells_changes = True
         # define the init on fires cells
         for lon, lat in ca_settings["init_cells_onfire"]:
             cell = self.board.cells[self.board.get_map_location(lon, lat)]
@@ -50,7 +48,7 @@ class CellularAutomaton:
 
         while not self.stop_condition():
             print("time step: {}".format(self.time))
-            #self.update_variables()
+            self.update_variables()
             self.board.draw(self.time)
             self.next_time_step()
 
@@ -78,15 +76,16 @@ class CellularAutomaton:
         # now set the new state to real state of cells, this is
         # for no change state of cell while are applying the
         # transition functions
-        self.any_cells_changes = False  # for stop condition
         for cell in self.board.cells.values():
-            if cell.state != cell.new_state:
-                self.any_cells_changes = True
             cell.state = cell.new_state
         # next time
         self.time += 1
 
     def update_variables(self):
+        # check if is necessary update
+        if (self.time-1) % 24 != 0:  # don't multiple of 24
+            return
+
         print("  updating variables...")
         current_date_time = self.date + timedelta(hours=self.time-1)
 
@@ -102,11 +101,16 @@ class CellularAutomaton:
         for cell in cells:
             self.board.cells[(cell.idx_h, cell.idx_w)] = cell
 
+        # update resistance_to_burning
+        for cell in self.board.cells.values():
+            cell.set_resistance_to_burning()
+
     def stop_condition(self):
-        if self.time > 50:  # maximum iteration
+        if self.time > 180:  # maximum iteration
             return True
 
-        if not self.any_cells_changes:
+        # don't stop if at least one cell is on fire
+        if "on_fire" not in [cell.state for cell in self.board.cells.values()]:
             return True
         else:
             return False
