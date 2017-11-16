@@ -42,7 +42,7 @@ class Board:
         self.cell_size_p = cell_size_p  # cell size in pixels
         self.cells = OrderedDict()  # dict[(idx_height, idx_width)] = cell instance
 
-        print("  init cells and vegetation cover...")
+        print("Init cells and vegetation cover...\n")
         # create board from top-left to bottom-right and left to right
         for idx_height in range(self.ncell_height):
             for idx_width in range(self.ncell_width):

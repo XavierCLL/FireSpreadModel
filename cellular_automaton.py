@@ -96,7 +96,7 @@ class CellularAutomaton:
                 cell.evi = get_evi(current_date_time, cell.lon, cell.lat)
             return block
 
-        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(3000))
+        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(300))
         cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=8, get=multiprocessing.get)
         for cell in cells:
             self.board.cells[(cell.idx_h, cell.idx_w)] = cell
@@ -108,7 +108,7 @@ class CellularAutomaton:
                 cell.ncdwppt = get_ncdwppt(current_date_time, cell.lon, cell.lat)
             return block
 
-        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(3000))
+        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(300))
         cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=8, get=multiprocessing.get)
         for cell in cells:
             self.board.cells[(cell.idx_h, cell.idx_w)] = cell
