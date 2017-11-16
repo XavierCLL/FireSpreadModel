@@ -89,14 +89,26 @@ class CellularAutomaton:
         print("  updating variables...")
         current_date_time = self.date + timedelta(hours=self.time-1)
 
-        # set for all cells the evi and ncdwppt in parallel process using dask
+        # set for all cells the evi in parallel process using dask
+        print("    updating EVI")
         def func(block):
             for cell in block:
                 cell.evi = get_evi(current_date_time, cell.lon, cell.lat)
+            return block
+
+        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(3000))
+        cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=8, get=multiprocessing.get)
+        for cell in cells:
+            self.board.cells[(cell.idx_h, cell.idx_w)] = cell
+
+        # set for all cells the ncdwppt in parallel process using dask
+        print("    updating NCDWPPT")
+        def func(block):
+            for cell in block:
                 cell.ncdwppt = get_ncdwppt(current_date_time, cell.lon, cell.lat)
             return block
 
-        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(300))
+        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(3000))
         cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=8, get=multiprocessing.get)
         for cell in cells:
             self.board.cells[(cell.idx_h, cell.idx_w)] = cell
