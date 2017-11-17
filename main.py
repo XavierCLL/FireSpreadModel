@@ -38,6 +38,9 @@ start_date = date(2007, 1, 2)
 # define the cells on fire at start [(lon, lat), ...]
 init_cells_onfire = [(-70.72449, 6.44022)]
 
+# velocity of spread fire, necessary for update variables
+pixels_by_day = 43  # pixels burned / day
+
 # cell size in pixels
 cell_size_p = 10
 
@@ -46,7 +49,7 @@ cell_size_p = 10
 
 ca_settings = {"extent": extent, "cell_size_dd": cell_size_dd,
                "cell_size_p": cell_size_p, "start_date": start_date,
-               "init_cells_onfire": init_cells_onfire}
+               "init_cells_onfire": init_cells_onfire, "pixels_by_day": pixels_by_day}
 
 
 ### run

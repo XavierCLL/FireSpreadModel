@@ -42,7 +42,10 @@ class CellularAutomaton:
         # init global date (don't change over time steps, for get current date => date + time)
         self.date = ca_settings["start_date"]
         # global step time for CA
-        self.time = 1  # hours
+        self.time = 1
+        # for update variables
+        self.pixels_by_day = ca_settings["pixels_by_day"]
+        self.day_number = 1
 
     def run(self):
 
@@ -82,11 +85,14 @@ class CellularAutomaton:
         self.time += 1
 
     def update_variables(self):
-        # check if is necessary update
-        if (self.time-1) % 24 != 0:  # don't multiple of 24
+        # get all pixels burned
+        pixels_burned = len([cell for cell in self.board.cells.values() if cell.state == "burned"])
+        # check if is not necessary update
+        # (day1: [y n n n n], day2: [y n n n n]...)
+        if pixels_burned < self.pixels_by_day * (self.day_number - 1):
             return
 
-        print("  updating variables...")
+        print("  updating variables for the day number {}".format(self.day_number))
         current_date_time = self.date + timedelta(hours=self.time-1)
 
         # set for all cells the evi in parallel process using dask
@@ -116,6 +122,8 @@ class CellularAutomaton:
         # update resistance_to_burning
         for cell in self.board.cells.values():
             cell.set_resistance_to_burning()
+
+        self.day_number += 1
 
     def stop_condition(self):
         if self.time > 180:  # maximum iteration
