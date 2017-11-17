@@ -25,36 +25,39 @@ from ingestion_cover import get_cover
 # * pastos limpios => COD_COB=="2.3.1*"
 # * arbustos o transicion => COD_COB=="3.2.*"
 
+fire_delay = 4
+
+
 def table_properties_cover(cod_cob):
     if cod_cob.startswith("3.2.1"):
         color = (222, 215, 163, 255)
         type = "Herbazal denso"
-        burning_index = 0.9
-        burning_time = 2  # time steps
+        burning_index = 0.8
+        burning_time = 1.5 * fire_delay  # time steps
         return color, type, burning_index, burning_time
     if cod_cob.startswith("2.3.1"):
         color = (199, 230, 123, 255)
         type = "Pastos limpios"
-        burning_index = 0.9
-        burning_time = 2  # time steps
+        burning_index = 0.8
+        burning_time = 1 * fire_delay  # time steps
         return color, type, burning_index, burning_time
     if cod_cob.startswith("3.2."):
         color = (191, 222, 144, 255)
         type = "Arbustos o zonas de transicion"
-        burning_index = 0.7
-        burning_time = 4  # time steps
+        burning_index = 0.6
+        burning_time = 2 * fire_delay  # time steps
         return color, type, burning_index, burning_time
     if cod_cob.startswith("3.1"):
         color = (68, 134, 78, 255)
         type = "Bosques de galeria y otros"
         burning_index = 0.1
-        burning_time = 6  # time steps
+        burning_time = 3 * fire_delay  # time steps
         return color, type, burning_index, burning_time
     if cod_cob.startswith("4.1"):
         color = (112, 197, 198, 255)
         type = "Zonas pantanosas o areas humedas"
         burning_index = 0.1
-        burning_time = 2  # time steps
+        burning_time = 2 * fire_delay  # time steps
         return color, type, burning_index, burning_time
 
     color = (152, 152, 152, 255)
