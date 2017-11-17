@@ -81,7 +81,7 @@ class Cell:
         self.resistance_to_burning = evi / (burning_index * ncdwppt)
 
     def next_state(self, nb_cells):
-        fire_delay = 4
+        fire_delay = 3
         # init new state no change
         new_state = deepcopy(self.state)
 
@@ -97,7 +97,7 @@ class Cell:
                     N = 1  # adjacent neighbor
                 d = 1  # spread velocity
                 r2b_nb_cells += d * N
-            self.resistance_to_burning -= r2b_nb_cells / (fire_delay*2-1)
+            self.resistance_to_burning -= r2b_nb_cells / (fire_delay)
 
             if self.resistance_to_burning <= 0:
                 new_state = "on_fire"

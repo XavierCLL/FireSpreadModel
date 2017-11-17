@@ -54,7 +54,7 @@ class Board:
             for cell in block:
                 cell.vegetation_cover.set_properties()
             return block
-        stack = da.from_array(np.array(list(self.cells.values())), chunks=(300))
+        stack = da.from_array(np.array(list(self.cells.values())), chunks=(5000))
         cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=8, get=multiprocessing.get)
         for cell in cells:
             self.cells[(cell.idx_h, cell.idx_w)] = cell

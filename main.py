@@ -36,10 +36,10 @@ cell_size_dd = 0.005
 start_date = date(2007, 1, 2)
 
 # define the cells on fire at start [(lon, lat), ...]
-init_cells_onfire = [(-70.72449, 6.44022)]
+init_cells_onfire = [(-70.72449, 6.44022), (-70.722, 6.445)]
 
 # velocity of spread fire, necessary for update variables
-pixels_by_day = 43  # pixels burned / day
+pixels_by_day = 1064  # pixels burned / day
 
 # cell size in pixels
 cell_size_p = 10

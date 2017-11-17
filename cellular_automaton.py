@@ -93,7 +93,7 @@ class CellularAutomaton:
             return
 
         print("  updating variables for the day number {}".format(self.day_number))
-        current_date_time = self.date + timedelta(hours=self.time-1)
+        current_date_time = self.date + timedelta(days=self.day_number-1)
 
         # set for all cells the evi in parallel process using dask
         print("    updating EVI")
@@ -102,10 +102,12 @@ class CellularAutomaton:
                 cell.evi = get_evi(current_date_time, cell.lon, cell.lat)
             return block
 
-        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(300))
+        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(5000))
         cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=8, get=multiprocessing.get)
         for cell in cells:
             self.board.cells[(cell.idx_h, cell.idx_w)] = cell
+
+        # print(self.board.cells[(20, 30)].evi)
 
         # set for all cells the ncdwppt in parallel process using dask
         print("    updating NCDWPPT")
@@ -114,10 +116,15 @@ class CellularAutomaton:
                 cell.ncdwppt = get_ncdwppt(current_date_time, cell.lon, cell.lat)
             return block
 
-        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(300))
+        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(5000))
         cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=8, get=multiprocessing.get)
         for cell in cells:
             self.board.cells[(cell.idx_h, cell.idx_w)] = cell
+
+        # c = self.board.cells[(10, 20)]
+        # print(get_ncdwppt(current_date_time, c.lon, c.lat))
+        # c = self.board.cells[(30, 40)]
+        # print(get_ncdwppt(current_date_time, c.lon, c.lat))
 
         # update resistance_to_burning
         for cell in self.board.cells.values():
