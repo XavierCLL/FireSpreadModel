@@ -49,11 +49,14 @@ class CellularAutomaton:
 
     def run(self):
 
-        while not self.stop_condition():
+        while True:
             print("time step: {}".format(self.time))
             self.update_variables()
             self.board.draw(self.time)
             self.next_time_step()
+
+            if self.stop_condition():
+                break
 
     def next_time_step(self):
         """
@@ -133,7 +136,7 @@ class CellularAutomaton:
         self.day_number += 1
 
     def stop_condition(self):
-        if self.time > 180:  # maximum iteration
+        if self.time > 300:  # maximum iteration
             return True
 
         # don't stop if at least one cell is on fire
