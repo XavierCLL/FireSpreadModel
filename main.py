@@ -30,13 +30,14 @@ y_max = 6.55
 extent = (x_min, x_max, y_min, y_max)
 
 # cell size in decimal degrees, default: 0.001
-cell_size_dd = 0.005
+cell_size_dd = 0.001
 
 # start date for the fire
 start_date = date(2007, 1, 2)
 
 # define the cells on fire at start [(lon, lat), ...]
-init_cells_onfire = [(-70.72449, 6.44022), (-70.722, 6.445)]
+init_cells_onfire = [(-70.72449, 6.44022), (-70.722, 6.445)]  # coarse resolution
+init_cells_onfire = [(-70.71798,6.44677), (-70.71697,6.44718)]  # fine resolution
 
 # velocity of spread fire, necessary for update variables
 pixels_by_day = 1064  # pixels burned / day

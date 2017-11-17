@@ -53,10 +53,11 @@ class CellularAutomaton:
             print("time step: {}".format(self.time))
             self.update_variables()
             self.board.draw(self.time)
-            self.next_time_step()
 
             if self.stop_condition():
                 break
+
+            self.next_time_step()
 
     def next_time_step(self):
         """
@@ -126,8 +127,14 @@ class CellularAutomaton:
 
         # c = self.board.cells[(10, 20)]
         # print(get_ncdwppt(current_date_time, c.lon, c.lat))
+        # print(get_evi(current_date_time, c.lon, c.lat))
         # c = self.board.cells[(30, 40)]
         # print(get_ncdwppt(current_date_time, c.lon, c.lat))
+        # print(get_evi(current_date_time, c.lon, c.lat))
+        #
+        # for cell in self.board.cells.values():
+        #     cell.ncdwppt = 35
+        #     cell.evi = 0.3
 
         # update resistance_to_burning
         for cell in self.board.cells.values():
@@ -136,8 +143,8 @@ class CellularAutomaton:
         self.day_number += 1
 
     def stop_condition(self):
-        if self.time > 300:  # maximum iteration
-            return True
+        # if self.time > 300:  # maximum iteration
+        #     return True
 
         # don't stop if at least one cell is on fire
         if "on_fire" not in [cell.state for cell in self.board.cells.values()]:

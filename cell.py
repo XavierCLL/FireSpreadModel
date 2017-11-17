@@ -81,7 +81,7 @@ class Cell:
         self.resistance_to_burning = evi / (burning_index * ncdwppt)
 
     def next_state(self, nb_cells):
-        fire_delay = 3
+        fire_delay = 8
         # init new state no change
         new_state = deepcopy(self.state)
 

@@ -32,13 +32,13 @@ def table_properties_cover(cod_cob):
     if cod_cob.startswith("3.2.1"):
         color = (222, 215, 163, 255)
         type = "Herbazal denso"
-        burning_index = 0.8
-        burning_time = 1.3 * fire_delay  # time steps
+        burning_index = 0.9
+        burning_time = 1.5 * fire_delay  # time steps
         return color, type, burning_index, burning_time
     if cod_cob.startswith("2.3.1"):
         color = (199, 230, 123, 255)
         type = "Pastos limpios"
-        burning_index = 0.8
+        burning_index = 0.9
         burning_time = 1 * fire_delay  # time steps
         return color, type, burning_index, burning_time
     if cod_cob.startswith("3.2."):
@@ -50,14 +50,14 @@ def table_properties_cover(cod_cob):
     if cod_cob.startswith("3.1"):
         color = (68, 134, 78, 255)
         type = "Bosques de galeria y otros"
-        burning_index = 0.1
+        burning_index = 0.2
         burning_time = 3 * fire_delay  # time steps
         return color, type, burning_index, burning_time
     if cod_cob.startswith("4.1"):
         color = (112, 197, 198, 255)
         type = "Zonas pantanosas o areas humedas"
-        burning_index = 0.1
-        burning_time = 2 * fire_delay  # time steps
+        burning_index = 0.3
+        burning_time = 1.5 * fire_delay  # time steps
         return color, type, burning_index, burning_time
 
     color = (152, 152, 152, 255)
