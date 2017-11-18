@@ -77,11 +77,12 @@ class Cell:
         evi = evi if evi > 0 else 0
         ncdwppt = ncdwppt / 28.3
         ncdwppt = ncdwppt if ncdwppt > 0 else 0.5
+        ncdwppt = ncdwppt if ncdwppt <= 1 else 1
 
         self.resistance_to_burning = evi / (burning_index * ncdwppt)
 
     def next_state(self, nb_cells):
-        fire_delay = 8
+        fire_delay = 6
         # init new state no change
         new_state = deepcopy(self.state)
 

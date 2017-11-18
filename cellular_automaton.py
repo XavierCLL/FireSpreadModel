@@ -125,15 +125,15 @@ class CellularAutomaton:
         for cell in cells:
             self.board.cells[(cell.idx_h, cell.idx_w)] = cell
 
-        # c = self.board.cells[(10, 20)]
-        # print(get_ncdwppt(current_date_time, c.lon, c.lat))
-        # print(get_evi(current_date_time, c.lon, c.lat))
-        # c = self.board.cells[(30, 40)]
-        # print(get_ncdwppt(current_date_time, c.lon, c.lat))
-        # print(get_evi(current_date_time, c.lon, c.lat))
-        #
+        c = self.board.cells[(30, 100)]
+        print(get_ncdwppt(current_date_time, c.lon, c.lat))
+        print(get_evi(current_date_time, c.lon, c.lat))
+        c = self.board.cells[(150, 200)]
+        print(get_ncdwppt(current_date_time, c.lon, c.lat))
+        print(get_evi(current_date_time, c.lon, c.lat))
+
         # for cell in self.board.cells.values():
-        #     cell.ncdwppt = 35
+        #     cell.ncdwppt = 35 + self.day_number
         #     cell.evi = 0.3
 
         # update resistance_to_burning
