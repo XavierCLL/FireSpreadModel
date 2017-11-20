@@ -106,10 +106,13 @@ class CellularAutomaton:
                 cell.evi = get_evi(current_date_time, cell.lon, cell.lat)
             return block
 
-        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(5000))
+        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(1000))
         cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=8, get=multiprocessing.get)
         for cell in cells:
-            self.board.cells[(cell.idx_h, cell.idx_w)] = cell
+            # don't update evi if this is detected as burned (diff > 0.03)
+            if self.board.cells[(cell.idx_h, cell.idx_w)].evi is None or \
+                    not (self.board.cells[(cell.idx_h, cell.idx_w)].evi - cell.evi > 0.03):
+                self.board.cells[(cell.idx_h, cell.idx_w)] = cell
 
         # print(self.board.cells[(20, 30)].evi)
 
@@ -120,7 +123,7 @@ class CellularAutomaton:
                 cell.ncdwppt = get_ncdwppt(current_date_time, cell.lon, cell.lat)
             return block
 
-        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(5000))
+        stack = da.from_array(np.array(list(self.board.cells.values())), chunks=(1000))
         cells = stack.map_blocks(func, dtype=Cell).compute(num_workers=8, get=multiprocessing.get)
         for cell in cells:
             self.board.cells[(cell.idx_h, cell.idx_w)] = cell
@@ -133,8 +136,10 @@ class CellularAutomaton:
         print(get_evi(current_date_time, c.lon, c.lat))
 
         # for cell in self.board.cells.values():
-        #     cell.ncdwppt = 35 + self.day_number
-        #     cell.evi = 0.3
+        #     cell.ncdwppt = 14 + self.day_number
+        #     cell.evi = 0.27
+        #     if self.time == 3 or self.time == 6:
+        #         cell.ncdwppt = 1
 
         # update resistance_to_burning
         for cell in self.board.cells.values():

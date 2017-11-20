@@ -75,14 +75,14 @@ class Cell:
         # y = (x - min)/(max - min)
         evi = (evi - 0.1) / (0.4 - 0.1)
         evi = evi if evi > 0 else 0
-        ncdwppt = ncdwppt / 28.3
-        ncdwppt = ncdwppt if ncdwppt > 0 else 0.5
+        ncdwppt = (ncdwppt / 15.5) ** 0.5
+        ncdwppt = ncdwppt if ncdwppt > 0 else 0.1
         ncdwppt = ncdwppt if ncdwppt <= 1 else 1
 
         self.resistance_to_burning = evi / (burning_index * ncdwppt)
 
     def next_state(self, nb_cells):
-        fire_delay = 6
+        fire_delay = 13.5
         # init new state no change
         new_state = deepcopy(self.state)
 
@@ -90,7 +90,7 @@ class Cell:
         if self.state == "unburned":
             r2b_nb_cells = 0
             for (h, w), nb_cell in nb_cells.items():
-                if nb_cell is None or nb_cell.state != "on_fire":
+                if not nb_cell or nb_cell.state != "on_fire":
                     continue
                 if abs(h) == 1 and abs(w) == 1:
                     N = 0.785  # pi/4  diagonal neighbor
@@ -98,10 +98,11 @@ class Cell:
                     N = 1  # adjacent neighbor
                 d = 1  # spread velocity
                 r2b_nb_cells += d * N
-            self.resistance_to_burning -= r2b_nb_cells / (fire_delay)
 
-            if self.resistance_to_burning <= 0:
-                new_state = "on_fire"
+            if r2b_nb_cells != 0:
+                self.resistance_to_burning -= r2b_nb_cells / (fire_delay)
+                if self.resistance_to_burning <= 0:
+                    new_state = "on_fire"
 
         ###########################
         if self.state == "on_fire":
